@@ -9,8 +9,8 @@ QB Radial Menu converted and fixed for ESX Framework
 
 # License
 
-    QBCore Framework
-    Copyright (C) 2021 Joshua Eger
+    ESX RADIAL MENU
+    Copyright (C) 2022 Ayman Najim
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
