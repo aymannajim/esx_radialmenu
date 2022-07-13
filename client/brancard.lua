@@ -213,7 +213,6 @@ AddEventHandler('qb-radialmenu:Brancard:client:BusyCheck', function(OtherId, typ
     local ped = PlayerPedId()
     if type == "lay" then
         LoadAnim("anim@gangops@morgue@table@")
-        IsEntityPlayingAnim(entity, animDict, animName, p4)
         if IsEntityPlayingAnim(ped, "anim@gangops@morgue@table@", "ko_front", 3) then
             TriggerServerEvent('qb-radialmenu:server:BusyResult', true, OtherId, type)
         else
@@ -319,7 +318,6 @@ function AttachToBrancard()
             LoadAnim("anim@heists@box_carry@")
             TaskPlayAnim(PlayerPed, 'anim@heists@box_carry@', 'idle', 8.0, 8.0, -1, 50, 0, false, false, false)
             SetTimeout(150, function()
-                print('1')
                 AttachEntityToEntity(BrancardObject, PlayerPed, GetPedBoneIndex(PlayerPed, 28422), 0.0, -1.0, -0.58, 195.0, 180.0, 180.0, 90.0, false, false, true, false, 2, true)
             end)
             FreezeEntityPosition(Obj, false)
@@ -331,7 +329,6 @@ function AttachToBrancard()
                 LoadAnim("anim@heists@box_carry@")
                 TaskPlayAnim(PlayerPed, 'anim@heists@box_carry@', 'idle', 8.0, 8.0, -1, 50, 0, false, false, false)
                 SetTimeout(150, function()
-                    print('2')
                     AttachEntityToEntity(BrancardObject, PlayerPed, GetPedBoneIndex(PlayerPed, 28422), 0.0, -1.0, -0.58, 195.0, 180.0, 180.0, 90.0, false, false, true, false, 2, true)
                 end)
                 FreezeEntityPosition(Obj, false)
