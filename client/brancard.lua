@@ -150,28 +150,6 @@ Citizen.CreateThread(function()
     end
 end)
 
-function GetClosestPlayer()
-    local closestPlayers = ESX.Game.GetPlayersInArea()
-    local closestDistance = -1
-    local closestPlayer = -1
-    local coords = GetEntityCoords(PlayerPedId())
-
-    for i=1, #closestPlayers, 1 do
-        if closestPlayers[i] ~= PlayerId() then
-            local pos = GetEntityCoords(GetPlayerPed(closestPlayers[i]))
-            local distance = #(pos - coords)
-
-            if closestDistance == -1 or closestDistance > distance then
-                closestPlayer = closestPlayers[i]
-                closestDistance = distance
-            end
-        end
-	end
-
-	return closestPlayer, closestDistance
-end
-
-
 RegisterNetEvent('qb-radialmenu:client:RemoveBrancardFromArea')
 AddEventHandler('qb-radialmenu:client:RemoveBrancardFromArea', function(PlayerPos, BObject)
     local Ped = PlayerPedId()
@@ -235,7 +213,6 @@ AddEventHandler('qb-radialmenu:Brancard:client:BusyCheck', function(OtherId, typ
     local ped = PlayerPedId()
     if type == "lay" then
         LoadAnim("anim@gangops@morgue@table@")
-        IsEntityPlayingAnim(entity, animDict, animName, p4)
         if IsEntityPlayingAnim(ped, "anim@gangops@morgue@table@", "ko_front", 3) then
             TriggerServerEvent('qb-radialmenu:server:BusyResult', true, OtherId, type)
         else
@@ -341,7 +318,6 @@ function AttachToBrancard()
             LoadAnim("anim@heists@box_carry@")
             TaskPlayAnim(PlayerPed, 'anim@heists@box_carry@', 'idle', 8.0, 8.0, -1, 50, 0, false, false, false)
             SetTimeout(150, function()
-                print('1')
                 AttachEntityToEntity(BrancardObject, PlayerPed, GetPedBoneIndex(PlayerPed, 28422), 0.0, -1.0, -0.58, 195.0, 180.0, 180.0, 90.0, false, false, true, false, 2, true)
             end)
             FreezeEntityPosition(Obj, false)
@@ -353,7 +329,6 @@ function AttachToBrancard()
                 LoadAnim("anim@heists@box_carry@")
                 TaskPlayAnim(PlayerPed, 'anim@heists@box_carry@', 'idle', 8.0, 8.0, -1, 50, 0, false, false, false)
                 SetTimeout(150, function()
-                    print('2')
                     AttachEntityToEntity(BrancardObject, PlayerPed, GetPedBoneIndex(PlayerPed, 28422), 0.0, -1.0, -0.58, 195.0, 180.0, 180.0, 90.0, false, false, true, false, 2, true)
                 end)
                 FreezeEntityPosition(Obj, false)
