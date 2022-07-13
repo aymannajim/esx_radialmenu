@@ -27,11 +27,10 @@ RegisterNetEvent('esx_ambulancejob:revive', function(pw)
 end)
 
 RegisterCommand('_rad', function()
-    -- if GetPlayerName(PlayerId()) ~= 'lua.dev' then
-    --     return
-    -- end
-    openRadial(true)
-    SetCursorLocation(0.5, 0.5)
+    if not IsPauseMenuActive() and not inRadialMenu then
+        openRadial(true)
+        SetCursorLocation(0.5, 0.5)
+    end
 end)
 
 RegisterKeyMapping('_rad', 'Open Radial Menu', 'keyboard', 'OEM_3')
@@ -193,15 +192,6 @@ function closeRadial(bool)
     inRadialMenu = bool
 end
 
-function getNearestVeh()
-    local pos = GetEntityCoords(PlayerPedId())
-    local entityWorld = GetOffsetFromEntityInWorldCoords(PlayerPedId(), 0.0, 20.0, 0.0)
-
-    local rayHandle = CastRayPointToPoint(pos.x, pos.y, pos.z, entityWorld.x, entityWorld.y, entityWorld.z, 10, PlayerPedId(), 0)
-    local _, _, _, _, vehicleHandle = GetRaycastResult(rayHandle)
-    return vehicleHandle
-end
-
 RegisterNUICallback('closeRadial', function()
     closeRadial(false)
 end)
@@ -240,7 +230,7 @@ AddEventHandler('qb-radialmenu:client:openDoor', function(data)
     if IsPedInAnyVehicle(ped, false) then
         closestVehicle = GetVehiclePedIsIn(ped)
     else
-        closestVehicle = getNearestVeh()
+        closestVehicle = ESX.Game.GetClosestVehicle()
     end
 
     if closestVehicle ~= 0 then
@@ -283,7 +273,7 @@ AddEventHandler('qb-radialmenu:client:setExtra', function(data)
     local bodydamage = 1000.0
 
     if veh ~= nil then
-        local plate = GetVehicleNumberPlateText(closestVehicle)
+        local plate = GetVehicleNumberPlateText(veh)
     
         if GetPedInVehicleSeat(veh, -1) == PlayerPedId() then
             if DoesExtraExist(veh, extra) then 
